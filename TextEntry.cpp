@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2017 Josh Blum
+// Copyright (c) 2017-2021 Josh Blum
 // SPDX-License-Identifier: BSL-1.0
 
 #include <Pothos/Framework.hpp>
@@ -66,8 +66,8 @@ public:
         this->registerCall(this, POTHOS_FCN_TUPLE(TextEntry, setValue));
         this->registerCall(this, POTHOS_FCN_TUPLE(TextEntry, setMode));
         this->registerSignal("valueChanged");
-        connect(_lineEdit, SIGNAL(textEdited(const QString &)), this, SLOT(handleTextEdited(const QString &)));
-        connect(_lineEdit, SIGNAL(returnPressed(void)), this, SLOT(handleReturnPressed(void)));
+        connect(_lineEdit, &QLineEdit::textEdited, this, &TextEntry::handleTextEdited);
+        connect(_lineEdit, &QLineEdit::returnPressed, this, &TextEntry::handleReturnPressed);
     }
 
     QWidget *widget(void)
@@ -161,7 +161,7 @@ private:
             _label->setText(title);
             _lineEdit->setStyleSheet("QLineEdit {}");
             QFontMetrics fm(_label->font());
-            _layout->setSpacing(fm.width("*"));
+            _layout->setSpacing(fm.horizontalAdvance("*"));
         }
     }
 
